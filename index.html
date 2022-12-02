@@ -1,68 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Pagina di prova</title>
-        <style>
-            table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+        <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+
+        <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.147.0/build/three.module.js"
             }
+        }
+        </script>
 
-            td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-            }
+        <script type="module">
 
-            tr:nth-child(even) {
-            background-color: #dddddd;
-            }
-        </style>
-    </head>
-    <body>
+            import * as THREE from 'three';
 
-    <h2>HTML Table</h2>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-    <table>
-    <tr>
-        <th>Company</th>
-        <th>Contact</th>
-        <th>Country</th>
-    </tr>
-    <tr>
-        <td>Alfreds Futterkiste</td>
-        <td>Maria Anders</td>
-        <td>Germany</td>
-    </tr>
-    <tr>
-        <td>Centro comercial Moctezuma</td>
-        <td>Francisco Chang</td>
-        <td>Mexico</td>
-    </tr>
-    <tr>
-        <td>Ernst Handel</td>
-        <td>Roland Mendel</td>
-        <td>Austria</td>
-    </tr>
-    <tr>
-        <td>Island Trading</td>
-        <td>Helen Bennett</td>
-        <td>UK</td>
-    </tr>
-    <tr>
-        <td>Laughing Bacchus Winecellars</td>
-        <td>Yoshi Tannamuri</td>
-        <td>Canada</td>
-    </tr>
-    <tr>
-        <td>Magazzini Alimentari Riuniti</td>
-        <td>Giovanni Rovelli</td>
-        <td>Italy</td>
-    </tr>
-    </table>
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
 
-    </body>
+			const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+			const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+			const cube = new THREE.Mesh( geometry, material );
+			scene.add( cube );
+
+			camera.position.z = 5;
+
+			function animate() {
+				requestAnimationFrame( animate );
+
+				cube.rotation.x += 0.01;
+				cube.rotation.y += 0.01;
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+		</script>
+	</body>
 </html>
-
